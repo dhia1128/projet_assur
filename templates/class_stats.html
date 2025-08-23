@@ -1,0 +1,36 @@
+<!-- filepath: c:\Users\user\OneDrive\Bureau\PythonProject\templates\class_stats.html -->
+{% extends "base.html" %}
+{% block content %}
+<h1>Classe 2024 Statistics & Origins</h1>
+<form method="POST" enctype="multipart/form-data">
+    <label for="file">Upload dftotal CSV:</label>
+    <input type="file" name="file" id="file" accept=".csv" required>
+    <button type="submit" class="btn">Upload & Analyze</button>
+</form>
+{% if stats is not none and stats.shape[0] > 0 %}
+    <h2>Statistics Table</h2>
+    <table>
+        <tr>
+            <th>Classe 2024</th>
+            {% for col in stats.columns %}
+                <th>{{ col }}</th>
+            {% endfor %}
+        </tr>
+        {% for idx, row in stats.iterrows() %}
+        <tr>
+            <td>{{ idx }}</td>
+            {% for col in stats.columns %}
+                <td>{{ row[col] }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
+{% endif %}
+{% if imgs %}
+    <h2>Origins Chart for Each Class</h2>
+    {% for item in imgs %}
+        <h3>Classe {{ item.classe }}</h3>
+        <img src="data:image/png;base64,{{ item.img }}" alt="Origins for Classe {{ item.classe }}">
+    {% endfor %}
+{% endif %}
+{% endblock %}

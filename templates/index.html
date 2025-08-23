@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <section class="hero">
+        <h1>Assurances Biat </h1>
+        <h2> Bonus Malus class and statistical Analyser  </h2>
+        <p>Welcome to our insurance platform where you can compare different insurance plans, analyze statistics, and manage your policies with ease.</p>
+        <a href="{{ url_for('signup') }}" class="btn">Get Started</a>
+        <a href="{{ url_for('login') }}" class="btn">Log In</a>
+        <p>Learn more about our services and how we can help you.</p>
+        <a href="{{ url_for('contact') }}" class="btn"><br>Learn More</a>
+    </section>
+
+
+    <section class="features">
+        <div class="feature">
+            <h2>Fast</h2>
+            <p>Built with lightweight Flask framework</p>
+        </div>
+        <div class="feature">
+            <h2>Responsive</h2>
+            <p>Looks great on any device</p>
+        </div>
+        <div class="feature">
+            <h2>Dynamic</h2>
+            <p>Easy to extend with Python</p>
+        </div>
+    </section>
+{% endblock %}

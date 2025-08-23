@@ -1,0 +1,69 @@
+<!-- filepath: c:\Users\user\OneDrive\Bureau\PythonProject\templates\compare.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<div class="comparison-container">
+    <h1>Client Class Comparison</h1>
+
+    <div class="upload-section">
+        <h2>Upload Datasets</h2>
+        <form method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="year">Select Year:</label>
+                <select name="year" id="year" required>
+                    <option value="">-- Select Year --</option>
+                    <option value="2023">2023</option>
+                    <option value="2024">2024</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="file">CSV File:</label>
+                <input type="file" name="file" id="file" accept=".csv" required>
+            </div>
+            <button type="submit" class="btn">Upload Dataset</button>
+        </form>
+    </div>
+
+    <div class="dataset-status">
+        <h3>Dataset Status</h3>
+        <ul>
+            <li>2023 Data: {% if datasets['2023'] is not none %}Loaded ({{ datasets['2023'].shape[0] }} rows){% else %}Not loaded{% endif %}</li>
+            <li>2024 Data: {% if datasets['2024'] is not none %}Loaded ({{ datasets['2024'].shape[0] }} rows){% else %}Not loaded{% endif %}</li>
+        </ul>
+    </div>
+
+    <div class="client-lookup">
+        <h2>Check Client Status</h2>
+        <form method="POST">
+            <div class="form-group">
+                <label for="client_id">Client Number (N°):</label>
+                <input type="text" name="client_id" id="client_id" required>
+            </div>
+            <button type="submit" class="btn">Check Client</button>
+        </form>
+
+        {% if result %}
+        <div class="result-box">
+            <h3>Results for Client {{ result.client_id }}</h3>
+            <table>
+                <tr>
+                    <th>Year</th>
+                    <th>Class</th>
+                </tr>
+                <tr>
+                    <td>2023</td>
+                    <td>{{ result['2023'] if result['2023'] is not none else 'Not found' }}</td>
+                </tr>
+                <tr>
+                    <td>2024</td>
+                    <td>{{ result['2024'] if result['2024'] is not none else 'Not found' }}</td>
+                </tr>
+            </table>
+            <p class="status {{ result.status|lower|replace(' ', '-') }}">
+                Status: <strong>{{ result.status }}</strong>
+            </p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
